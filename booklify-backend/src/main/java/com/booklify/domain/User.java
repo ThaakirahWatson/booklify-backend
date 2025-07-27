@@ -1,6 +1,7 @@
 package com.booklify.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +19,9 @@ public class User {
     protected String email;
     @Column(nullable = false)
     protected String password;
-    @Column(name = "date_joined", nullable = false)
+
+    @CreationTimestamp
+    @Column(name = "date_joined", nullable = false, updatable = false)
     protected LocalDateTime dateJoined;
 
     public User() {

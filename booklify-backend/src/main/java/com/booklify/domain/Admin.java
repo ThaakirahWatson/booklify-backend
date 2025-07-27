@@ -10,6 +10,7 @@ import java.util.List;
 @DiscriminatorValue("Admin")
 public class Admin extends User {
 
+    @Column(nullable = true)
     private LocalDateTime lastLogin;
 
     @ElementCollection(targetClass = Permissions.class)
@@ -96,12 +97,20 @@ public class Admin extends User {
             return this;
         }
 
+        public AdminBuilder copy (Admin admin) {
+            this.id = admin.id;
+            this.fullName = admin.fullName;
+            this.email = admin.email;
+            this.password = admin.password;
+            this.dateJoined = admin.dateJoined;
+            this.lastLogin = admin.lastLogin;
+            this.permissions = admin.permissions;
+            return this;
+        }
+
         public Admin build() {
             if(this.lastLogin == null){
                 this.lastLogin = LocalDateTime.now();
-            }
-            if(this.dateJoined == null){
-                this.dateJoined = LocalDateTime.now();
             }
             return new Admin(this);
         }
