@@ -2,35 +2,42 @@ package com.booklify.service;
 
 import com.booklify.domain.Admin;
 import com.booklify.domain.RegularUser;
-import org.springframework.data.mapping.model.AbstractPersistentProperty;
+import com.booklify.dto.AdminDto;
+import com.booklify.dto.CreateAdminRequestDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IAdminService extends IService<Admin, Long> {
 
-    List<Admin> findByEmail(String email);
+    Optional<Admin> findByEmail(String email);
     List<Admin> findByFullName(String fullName);
 
-    // Finding Regular Users by Email
+    // Finding Regular Users by Email and Name
     List<RegularUser> findAllRegularUsersByEmail(String email);
     List<RegularUser> findAllRegularUsersByFullName(String fullName);
 
-    //Logging in Admin
+    // Logging in Admin
     Admin login(String email, String password);
 
-    //permissions
+    // Regular User Management
+    List<RegularUser> viewAllRegularUsers();
     void deleteRegularUserById(Long id);
-    void updateRegularUserById(Long id, RegularUser regularUser);  //Editing a Regular User's details
-    Void viewAllRegularUsers();
+    void updateRegularUserById(Long id, RegularUser regularUser);
 
-    Void approveBookListing(Long bookId);
-    Void rejectBookListing(Long bookId);
-    Void viewAllBookListings();
-    Void deleteBookListingById(Long bookId);
-    Void editBookListingById(Long bookId, RegularUser regularUser);
 
-    Void viewSalesReport();
-    Void viewUserActivityReport();
-    Void financialReport();
+
+    // Book Listing Management to be implemented in the future when the Book class is defined
+//    List<Book> viewAllBookListings();
+//    void approveBookListing(Long bookId);
+//    void rejectBookListing(Long bookId);
+//    void deleteBookListingById(Long bookId);
+//    void editBookListingById(Long bookId, Book updatedListing);
+
+
+    // Placeholder methods for future implementation for the reports
+//    Void viewSalesReport();
+//    Void viewUserActivityReport();
+//    Void financialReport();
 
 }

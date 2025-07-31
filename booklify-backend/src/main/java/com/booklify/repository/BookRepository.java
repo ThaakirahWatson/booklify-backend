@@ -1,4 +1,4 @@
 package com.booklify.repository;
 
-public class BookRepository {
+public interface BookRepository {
 }
