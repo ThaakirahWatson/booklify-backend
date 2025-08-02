@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class RegularUserFactory {
 
     public static RegularUser createRegularUser(String fullName, String email, String password, LocalDateTime dateJoined,
-                                                double sellerRating, String bio, LocalDateTime lastLogin){
+                                                Double sellerRating, String bio, LocalDateTime lastLogin){
 
         if (Helper.isNullOrEmpty(fullName)||
                 !Helper.isValidEmail(email)||

@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @DiscriminatorValue("RegularUser")
 public class RegularUser extends User{
 
-    @Column(nullable = false)
-    private double sellerRating = 0.0;
+    @Column(nullable = true)
+    private Double sellerRating = 0.0;
 
     @Lob
     @Column(nullable = true)
@@ -26,7 +26,7 @@ public class RegularUser extends User{
     }
 
     public RegularUser(Long id, String fullName, String email, String password, LocalDateTime dateJoined,
-                       double sellerRating, String bio, LocalDateTime lastLogin) {
+                       Double sellerRating, String bio, LocalDateTime lastLogin) {
         super(id, fullName, email, password, dateJoined);
         this.sellerRating = sellerRating;
         this.bio = bio;
@@ -76,7 +76,7 @@ public class RegularUser extends User{
         private String email;
         private String password;
         private LocalDateTime dateJoined;
-        private double sellerRating = 0.0;
+        private Double sellerRating = 0.0;
         private String bio;
         private LocalDateTime lastLogin;
 
@@ -105,7 +105,7 @@ public class RegularUser extends User{
             return this;
         }
 
-        public RegularUserBuilder setSellerRating(double sellerRating) {
+        public RegularUserBuilder setSellerRating(Double sellerRating) {
             this.sellerRating = sellerRating;
             return this;
         }
