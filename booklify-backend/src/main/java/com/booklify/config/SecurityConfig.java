@@ -30,6 +30,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/regular-user/login").permitAll()
                         .requestMatchers("/api/regular-user/create").permitAll()
                         .requestMatchers("/api/regular-user/**").permitAll()
+                        .requestMatchers("/api/admins/create").permitAll()
+                        .requestMatchers("/api/admins/login").permitAll()
+                        .requestMatchers("/api/admins/**").permitAll()
+                        // Only admins can
                         // Add any other public endpoints
                         .anyRequest().authenticated()
                 )
