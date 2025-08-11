@@ -1,4 +1,8 @@
 package com.booklify.domain.enums;
 
-public class BookCondition {
+public enum BookCondition {
+
+    EXCELLENT,
+    AVERAGE,
+    ACCEPTABLE,
 }
