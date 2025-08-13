@@ -39,4 +39,22 @@ public class Helper {
         String isbnRegex = "^(97(8|9))?\\d{9}(\\d|X)$"; // Regex for ISBN-10 and ISBN-13
         return Pattern.matches(isbnRegex, isbn);
     }
+
+    //for the book images
+
+    public static boolean isValidImageType(byte[] image) {
+        // Simple check for common image formats
+        if (image.length < 4) return false;
+
+        // PNG check
+        if (image[0] == (byte) 0x89 && image[1] == 'P' && image[2] == 'N' && image[3] == 'G') {
+            return true;
+        }
+        // JPEG check
+        if (image[0] == (byte) 0xFF && image[1] == (byte) 0xD8) {
+            return true;
+        }
+        return false;
+    }
+
 }
