@@ -8,5 +8,5 @@ public interface IService <T, Id> {
 
     T update(T entity);
 
-    void deleteById(Id id);
+    boolean deleteById(Id id);
 }
