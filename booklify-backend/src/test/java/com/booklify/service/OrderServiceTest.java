@@ -43,7 +43,8 @@ class OrderServiceTest {
                 .setRegularUser(regularUser)
                 .setOrderDate(LocalDateTime.now())
                 .build();
-
+        order = orderService.save(order);
+        assertNotNull(order.getOrderId(), "Order ID should not be null after saving");
     }
 
     @Test
@@ -66,28 +67,26 @@ class OrderServiceTest {
     @Test
     @org.junit.jupiter.api.Order(2)
     void findById() {
-        // Save the order first to ensure it has an ID
-        Order savedOrder = orderService.save(order);
-        assertNotNull(savedOrder.getOrderId(), "Order ID should not be null after saving");
+        // Ensure the order is saved before finding it
+        assertNotNull(order, "Order should not be null before finding by ID");
 
         // Find the order by ID
-        Order foundOrder = orderService.findById(savedOrder.getOrderId());
+        Order foundOrder = orderService.findById(order.getOrderId());
 
         // Validate that the found order matches the original order
         assertNotNull(foundOrder, "Found order should not be null");
-        assertEquals(savedOrder.getOrderId(), foundOrder.getOrderId(), "Found order ID should match the saved order ID");
+        assertEquals(order.getOrderId(), foundOrder.getOrderId(), "Found order ID should match the original order ID");
     }
 
     @Test
     @org.junit.jupiter.api.Order(3)
     void update() {
-        // Save the order first to ensure it has an ID
-        Order savedOrder = orderService.save(order);
-        assertNotNull(savedOrder.getOrderId(), "Order ID should not be null after saving");
+        // Ensure the order is saved before updating it
+        assertNotNull(order, "Order should not be null before updating");
 
         // Update the order's order date
-        Order updatedOrder = new Order.OrderBuilder()
-                .copy(savedOrder)
+     Order updatedOrder = new Order.OrderBuilder()
+                .copy(order)
                 .setOrderDate(LocalDateTime.now().plusDays(1)) // Update to a new date
                 .build();
 
@@ -98,26 +97,22 @@ class OrderServiceTest {
         assertNotNull(savedUpdatedOrder, "Updated order should not be null");
         assertEquals(updatedOrder.getOrderDate(), savedUpdatedOrder.getOrderDate(),
                      "Updated order date should match the new date");
-        assertEquals(savedOrder.getOrderId(), savedUpdatedOrder.getOrderId(),
+        assertEquals(order.getOrderId(), savedUpdatedOrder.getOrderId(),
                      "Updated order ID should match the original order ID");
-        assertEquals(savedOrder.getRegularUser().getId(), savedUpdatedOrder.getRegularUser().getId(),
+        assertEquals(order.getRegularUser().getId(), savedUpdatedOrder.getRegularUser().getId(),
                      "Updated order's regular user ID should match the original regular user ID");
     }
 
     @Test
     @org.junit.jupiter.api.Order(4)
     void getAll() {
-        // Save the order first to ensure it is persisted
-        Order savedOrder = orderService.save(order);
-        assertNotNull(savedOrder.getOrderId(), "Order ID should not be null after saving");
-
         // Retrieve all orders
         var orders = orderService.getAll();
 
-        // Validate that the list of orders is not null and contains the saved order
+        // Validate that the list of orders is not null and contains at least one order
         assertNotNull(orders, "Orders list should not be null");
         assertFalse(orders.isEmpty(), "Orders list should not be empty");
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(savedOrder.getOrderId())),
+        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
                    "Orders list should contain the saved order");
     }
 
@@ -126,35 +121,47 @@ class OrderServiceTest {
     void findByRegularUserId() {
         // Ensure the regular user is saved before finding orders by user ID
         assertNotNull(regularUser.getId(), "Regular User ID should not be null before finding orders");
+
+        // Find orders by regular user ID
+        var orders = orderService.findByRegularUserId(regularUser.getId());
+
+        // Validate that the list of orders is not null and contains the saved order
+        assertNotNull(orders, "Orders list should not be null");
+        assertFalse(orders.isEmpty(), "Orders list should not be empty");
         assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
+                   "Orders list should contain the saved order for the regular user");
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(6)
+    void findByOrderDate() {
         // Ensure the order is saved before finding by order date
         assertNotNull(order, "Order should not be null before finding by order date");
+
+        // Find orders by order date
         var orders = orderService.findByOrderDate(order.getOrderDate());
-        var orders = orderService.findByOrderDate(order.getOrderDate());
-        var orders = orderService.findByOrderDate(order.getOrderDate());
+
+        // Validate that the list of orders is not null and contains the saved order
+        assertNotNull(orders, "Orders list should not be null");
+        assertFalse(orders.isEmpty(), "Orders list should not be empty");
         assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        // Ensure the order is saved before deleting it
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
+                   "Orders list should contain the saved order for the specified order date");
+    }
+
+    @Test
+    @org.junit.jupiter.api.Order(7)
+    void deleteById() {
         // Ensure the order is saved before deleting it
         assertNotNull(order, "Order should not be null before deletion");
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
+
+        // Delete the order by ID
+        boolean isDeleted = orderService.deleteById(order.getOrderId());
+
+        // Validate that the order was deleted successfully
+        assertTrue(isDeleted, "Order should be deleted successfully");
+
+        // Attempt to find the deleted order by ID
+        assertThrows(RuntimeException.class, () -> orderService.findById(order.getOrderId()),
+                     "Finding a deleted order should throw an exception");
+    }
+}
