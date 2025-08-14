@@ -40,6 +40,10 @@ public class Helper {
         return Pattern.matches(isbnRegex, isbn);
     }
 
+    public static boolean isValidAmount(double amount){
+        return amount > 0;
+    }
+
     //for the book images
 
     public static boolean isValidImageType(byte[] image) {
