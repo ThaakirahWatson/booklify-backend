@@ -33,6 +33,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/admins/create").permitAll()
                         .requestMatchers("/api/admins/login").permitAll()
                         .requestMatchers("/api/admins/**").permitAll()
+                        .requestMatchers("/api/orderItems/**").permitAll()
+                        .requestMatchers("/api/orders/**").permitAll()
                         // Only admins can
                         // Add any other public endpoints
                         .anyRequest().authenticated()
