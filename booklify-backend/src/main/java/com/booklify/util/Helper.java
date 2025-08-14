@@ -57,4 +57,12 @@ public class Helper {
         return false;
     }
 
+    public static boolean isValidQuantity(int quantity) {
+        return quantity > 0; // Quantity must be a positive integer
+    }
+
+    public static boolean isValidPrice(double price) {
+        return price > 0.0; // Price must be a non-negative number
+    }
+
 }
