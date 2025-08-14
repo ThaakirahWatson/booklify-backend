@@ -15,7 +15,7 @@ public class Admin extends User {
 
     @ElementCollection(targetClass = Permissions.class)
     @Enumerated(EnumType.STRING)
-    private List<Permissions> permissions;
+    private List<Permissions> permissions; //List of permissions granted to the admin
 
 
     public Admin() {
@@ -51,8 +51,6 @@ public class Admin extends User {
         return permissions;
     }
 
-
-    
     public static class AdminBuilder {
         private Long id;
         private String fullName;
@@ -97,6 +95,7 @@ public class Admin extends User {
             return this;
         }
 
+         // Copy constructor to copy properties from an existing Admin object
         public AdminBuilder copy (Admin admin) {
             this.id = admin.id;
             this.fullName = admin.fullName;

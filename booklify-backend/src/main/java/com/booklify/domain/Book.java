@@ -1,7 +1,6 @@
 package com.booklify.domain;
 
 import com.booklify.domain.enums.BookCondition;
-import com.booklify.domain.enums.BookStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
