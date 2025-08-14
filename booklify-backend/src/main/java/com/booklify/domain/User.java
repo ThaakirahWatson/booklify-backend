@@ -20,7 +20,7 @@ public class User {
     @Column(nullable = false)
     protected String password;
 
-    @CreationTimestamp
+    @CreationTimestamp // Automatically sets the date when the user is created
     @Column(name = "date_joined", nullable = false, updatable = false)
     protected LocalDateTime dateJoined;
 
