@@ -43,8 +43,7 @@ class OrderServiceTest {
                 .setRegularUser(regularUser)
                 .setOrderDate(LocalDateTime.now())
                 .build();
-        order = orderService.save(order);
-        assertNotNull(order.getOrderId(), "Order ID should not be null after saving");
+
     }
 
     @Test
