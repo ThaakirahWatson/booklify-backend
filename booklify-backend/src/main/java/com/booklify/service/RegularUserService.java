@@ -113,9 +113,10 @@ public class RegularUserService implements IRegularUserService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         if (regularUserRepository.existsById(id)) {
             regularUserRepository.deleteById(id);
         }
+        return false;
     }
 }
