@@ -30,10 +30,11 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public void deleteById(Long aLong) {
+    public boolean deleteById(Long aLong) {
         if (bookRepo.existsById(aLong)) {
             bookRepo.deleteById(aLong);
         }
+        return false;
     }
 
     @Override

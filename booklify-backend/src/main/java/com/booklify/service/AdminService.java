@@ -82,8 +82,9 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public boolean deleteById(Long id) {
         adminRepository.deleteById(id);
+        return false;
     }
 
     @Override
