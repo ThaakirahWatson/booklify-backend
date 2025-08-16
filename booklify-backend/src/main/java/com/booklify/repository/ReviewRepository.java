@@ -1,4 +1,13 @@
+// Thaakirah Watson, 230037550
 package com.booklify.repository;
 
-public class ReviewRepository {
+import com.booklify.domain.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByBookBookId(Long bookId);
+    List<Review> findByUserUserId(Long userId);
 }
