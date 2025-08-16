@@ -62,6 +62,10 @@ public class Book {
 
 
     }
+//recently added
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public byte[] getImage() {
         return image;
