@@ -25,7 +25,7 @@ class ReviewFactoryTest {
 
     @Test
     void createReview() {
-        Review review = reviewFactory.createReview(5, "Excellent book!");
+        Review review = reviewFactory.createReview1(5, "Excellent book!");
         assertNotNull(review, "Review should not be null");
         assertEquals(5, review.getReviewRating(), "Rating should match");
         assertEquals("Excellent book!", review.getReviewComment(), "Comment should match");
