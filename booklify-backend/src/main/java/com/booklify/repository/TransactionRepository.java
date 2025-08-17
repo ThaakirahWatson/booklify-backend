@@ -1,4 +1,19 @@
 package com.booklify.repository;
 
-public class TransactionRepository {
+import com.booklify.domain.RegularUser;
+import com.booklify.domain.Transaction;
+import com.booklify.domain.enums.TransactionStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+
+    List<Transaction> findByTransactionStatus(TransactionStatus transactionStatus);
+    List<Transaction> findByOrder_OrderId(Long orderId);
+    List<Transaction> findByPayment_PaymentId(Long paymentId);
+    List<Transaction> findByRegularUser(Long id);
+
 }
