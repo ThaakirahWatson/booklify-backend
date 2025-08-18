@@ -1,7 +1,10 @@
 // Thaakirah Watson, 230037550
 package com.booklify.factory;
 
+import com.booklify.domain.Book;
 import com.booklify.domain.Review;
+import com.booklify.domain.User;
+
 import java.time.LocalDate;
 
 public class ReviewFactory {
@@ -10,7 +13,6 @@ public class ReviewFactory {
 
     private ReviewFactory() {}
 
-    // Singleton instance
     public static ReviewFactory getInstance() {
         if (reviewFactory == null) {
             reviewFactory = new ReviewFactory();
@@ -18,11 +20,19 @@ public class ReviewFactory {
         return reviewFactory;
     }
 
-    public Review createReview(int rating, String comment) {
+    public static Review createReview(int rating, String comment, LocalDate date, User user, Book book) {
         return new Review.Builder()
                 .setReviewRating(rating)
                 .setReviewComment(comment)
-                .setReviewDate(LocalDate.now())
+                .setReviewDate(date)
+                .setUser(user)
+                .setBook(book)
+                .build();
+    }
+    public static Review createReview1(int rating, String comment) {
+        return new Review.Builder()
+                .setReviewRating(rating)
+                .setReviewComment(comment)
                 .build();
     }
 }
