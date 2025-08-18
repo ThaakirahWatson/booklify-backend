@@ -66,6 +66,18 @@ public class Transaction {
         return transactionStatus;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public RegularUser getRegularUser() {
+        return regularUser;
+    }
+
     @Override
     public String toString() {
         return "Transaction{" +
