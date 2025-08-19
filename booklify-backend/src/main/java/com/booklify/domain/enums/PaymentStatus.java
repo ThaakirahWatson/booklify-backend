@@ -1,4 +1,11 @@
 package com.booklify.domain.enums;
 
-public class PaymentStatus {
+public enum PaymentStatus {
+    //Lungela Nkunkuma 222491582
+
+    PENDING,
+    COMPLETED,
+    FAILED,
+    REFUNDED,
+    CANCELLED
 }
