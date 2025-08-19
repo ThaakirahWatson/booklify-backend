@@ -6,11 +6,16 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AddressFactoryTest {
+//    private RegularUser user;
+    //        user = new RegularUser.RegularUserBuilder()
+//                .setFullName("Sesona Panca")
+//                .setEmail("sesona@example.com")
+//                .setPassword("securePassword123")
+//                .build();
 
     @Test
     void createAddress_withValidData_shouldReturnAddress() {
         Address address = AddressFactory.createAddress(
-                "123",
                 "Main Street",
                 "Rosebank",
                 "Cape Town",
@@ -20,7 +25,6 @@ class AddressFactoryTest {
         );
 
         assertNotNull(address);
-        assertEquals("123", address.getUnitNumber());
         assertEquals("Main Street", address.getStreet());
         assertEquals("Rosebank", address.getSuburb());
         assertEquals("Cape Town", address.getCity());

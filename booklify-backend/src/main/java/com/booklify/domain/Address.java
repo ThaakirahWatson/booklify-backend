@@ -3,14 +3,14 @@ package com.booklify.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Address{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(nullable = true)
-    protected String unitNumber;
+    private Long id;
 
     @Column(nullable = true)
     protected String street ;
@@ -30,24 +30,35 @@ public class Address{
     @Column(nullable = false)
     protected String postalCode;
 
+    @OneToOne(mappedBy = "address")
+    private RegularUser user;
+    @OneToMany(mappedBy = "shippingAddress")
+    private List<Order> order;
+
+
     protected Address(){
 
     }
 
     private Address(Builder builder){
-        this.unitNumber = builder.unitNumber;
         this.street = builder.street;
         this.suburb= builder.suburb;
         this.city=builder.city;
         this.province=builder.province;
         this.country=builder.country;
-        this.postalCode= builder.postalCode;
+
 
     }
 
-    public String getUnitNumber() {
-        return unitNumber;
+    public Address(String street, String city,String suburb,String province,String country) {
+        this.street = street;
+        this.suburb= suburb;
+        this.city=city;
+        this.province=province;
+        this.country=country;
     }
+
+
 
     public String getStreet() {
         return street;
@@ -73,10 +84,17 @@ public class Address{
         return postalCode;
     }
 
+    /*public RegularUser getUser() {
+        return user;
+    }
+
+    public List<Order> getOrders() {
+        return order;
+    }*/
+
     @Override
     public String toString() {
         return "Address{" +
-                "unitNumber='" + unitNumber + '\'' +
                 "street='" + street + '\'' +
                 ", suburb='" + suburb + '\'' +
                 ", province='" + province + '\'' +
@@ -86,18 +104,15 @@ public class Address{
                 '}';
     }
     public static class Builder {
-        protected String unitNumber ;
         protected String street ;
         protected String suburb;
         protected String province;
         protected String city;
         protected String country ;
         protected String postalCode;
+        protected RegularUser user;
+        protected List<Order> orders;
 
-        public Builder setUnitNumber(String unitNumber) {
-            this.unitNumber = unitNumber;
-            return this;
-        }
 
         public Builder setStreet(String street) {
             this.street = street;
@@ -127,14 +142,25 @@ public class Address{
             this.country = country;
             return this;
         }
+
+        public Builder setUser(RegularUser user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder setOrders(List<Order> orders) {
+            this.orders = orders;
+            return this;
+        }
+
         public Builder copy(Address address){
-            this.unitNumber = address.unitNumber;
             this.street = address.street;
             this.suburb= address.suburb;
             this.city=address.city;
             this.province=address.province;
             this.country=address.country;
-            this.postalCode= address.postalCode;
+            this.orders= address.order;
+            this.user= address.user;
             return this;
 
         }

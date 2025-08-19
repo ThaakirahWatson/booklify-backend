@@ -16,17 +16,23 @@ class AddressServiceTest {
     @Autowired
     private AddressService addressService;
     private Address address1;
+    //private RegularUser user;
 
     @BeforeEach
     void setUp() {
         address1 = new Address.Builder()
-                .setUnitNumber("246")
                 .setStreet("Buitenkant")
                 .setCity("Cape Town")
                 .setPostalCode("8001")
                 .setProvince("Western Cape")
                 .build();
     }
+
+    //        user = new RegularUser.RegularUserBuilder()
+//                .setFullName("Test user")
+//                .setEmail("test@example.com")
+//                .setPassword("test123")
+//                .build();
 
 
     @Test
@@ -90,4 +96,5 @@ class AddressServiceTest {
         assertTrue(all.isEmpty());
         System.out.println("All addresses deleted");
     }
+
 }

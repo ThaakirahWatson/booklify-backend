@@ -1,13 +1,14 @@
 package com.booklify.factory;
 
 import com.booklify.domain.Address;
+import com.booklify.domain.Order;
+import com.booklify.domain.RegularUser;
+
+import java.util.List;
 
 public class AddressFactory {
-    public static Address createAddress(String unitNumber ,String street,String suburb,String city,String province,String country,String postalCode){
+    public static Address createAddress(String street, String suburb, String city, String province, String country, String postalCode){ //RegularUser user, List<Order> orders){
 
-        if(unitNumber == null ){
-            return null;
-        }
 
         if(street == null||street.isEmpty() ){
             return null;
@@ -24,17 +25,24 @@ public class AddressFactory {
         if(city == null||city.isEmpty() ){
             return null;
         }
-        if (postalCode == null) {
+        if (postalCode == null||postalCode.isEmpty()) {
             return null;
         }
+       // if (user == null) {
+       //     return null;
+       // }
+        //if (orders == null) {
+         //   return null;
+        //}
         return new Address.Builder()
-                .setUnitNumber(unitNumber)
                 .setStreet(street)
                 .setSuburb(suburb)
                 .setCity(city)
                 .setProvince(province)
                 .setPostalCode(postalCode)
                 .setCountry(country)
+                //.setUser(user)
+               // .setOrders(orders)
                 .build();
     }
 
