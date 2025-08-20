@@ -1,6 +1,7 @@
 package com.booklify.factory;
 
 import com.booklify.domain.Book;
+import com.booklify.domain.RegularUser;
 import com.booklify.domain.enums.BookCondition;
 import com.booklify.util.Helper;
 
@@ -10,7 +11,7 @@ public class BookFactory {
 
     public static Book createBook(String isbn, String title, String author, String publisher,
                                   BookCondition condition, Double price, String description,
-                                   byte[] image) {
+                                  byte[] image, RegularUser user) {
         // Validations
         if (!Helper.isValidISBN(isbn)) {
             throw new IllegalArgumentException("Invalid ISBN.");
@@ -39,6 +40,10 @@ public class BookFactory {
             throw new IllegalArgumentException("Image size exceeds maximum limit of 5MB");
         }
 
+        if (user == null) {
+            throw new IllegalArgumentException("Seller must not be null.");
+        }
+
 
         return new Book.Builder()
                 .setIsbn(isbn)
@@ -49,7 +54,7 @@ public class BookFactory {
                 .setPrice(price)
                 .setDescription(description)
                 .setUploadedDate(LocalDateTime.now())
-//                .setSeller(seller)
+                .setUser(user)
                 .setImage(image)
                 .build();
     }
