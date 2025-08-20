@@ -18,6 +18,9 @@ public class BookDto {
     private String description;
     private LocalDateTime uploadedDate;
     private byte[] image;
+    private Long uploaderId;
+    private String uploaderName;
+    private String uploaderEmail;
 
     public BookDto() {
     }
@@ -38,7 +41,7 @@ public class BookDto {
     }
 
     public static BookDto fromEntity(Book book) {
-        return new BookDto(
+        BookDto dto = new BookDto(
                 book.getBookID(),
                 book.getIsbn(),
                 book.getTitle(),
@@ -50,7 +53,14 @@ public class BookDto {
                 book.getUploadedDate(),
                 book.getImage()
         );
+        if (book.getUser() != null) {
+            dto.setUploaderId(book.getUser().getId());
+            dto.setUploaderName(book.getUser().getFullName());
+            dto.setUploaderEmail(book.getUser().getEmail());
+        }
+        return dto;
     }
+
 
     public static Book toEntity(BookDto dto) {
         return new Book.Builder()
@@ -148,4 +158,26 @@ public class BookDto {
     public void setImage(byte[] image) {
         this.image = image;
     }
+
+    public Long getUploaderId() {
+        return uploaderId;
+    }
+
+    public void setUploaderId(Long uploaderId) {
+        this.uploaderId = uploaderId;
+    }
+
+    public String getUploaderName() {
+        return uploaderName;
+    }
+    public void setUploaderName(String uploaderName) {
+        this.uploaderName = uploaderName;
+    }
+    public String getUploaderEmail() {
+        return uploaderEmail;
+    }
+    public void setUploaderEmail(String uploaderEmail) {
+        this.uploaderEmail = uploaderEmail;
+    }
+
 }
