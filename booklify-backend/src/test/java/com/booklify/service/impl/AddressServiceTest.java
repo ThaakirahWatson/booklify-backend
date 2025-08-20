@@ -20,7 +20,6 @@ class AddressServiceTest {
     @BeforeEach
     void setUp() {
         address1 = new Address.Builder()
-                .setUnitNumber("246")
                 .setStreet("Buitenkant")
                 .setCity("Cape Town")
                 .setPostalCode("8001")
