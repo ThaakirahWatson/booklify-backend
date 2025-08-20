@@ -199,6 +199,7 @@ class OrderItemControllerTest {
                 .setIsbn("1234567890123")
                 .setPublisher("Test Publisher")
                 .setUploadedDate(LocalDateTime.now())
+                .setUser(regularUser) // Ensure user is set
                 .build();
         testBook = bookRepository.save(testBook);
         OrderItem item = new OrderItem.OrderItemBuilder()
