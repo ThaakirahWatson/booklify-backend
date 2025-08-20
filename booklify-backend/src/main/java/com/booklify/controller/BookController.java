@@ -45,7 +45,8 @@ public class BookController {
         if (imageFile != null && !imageFile.isEmpty()) {
             builder.setImage(imageFile.getBytes());
         }
-        Book created = service.save(builder.build());
+        Book book = builder.build();
+        Book created = service.save(book);
         return ResponseEntity.ok(BookDto.fromEntity(created));
     }
 
@@ -77,7 +78,8 @@ public class BookController {
         if (imageFile != null && !imageFile.isEmpty()) {
             builder.setImage(imageFile.getBytes());
         }
-        Book updated = service.update(builder.build());
+        Book book = builder.build();
+        Book updated = service.update(book);
         return ResponseEntity.ok(BookDto.fromEntity(updated));
     }
 

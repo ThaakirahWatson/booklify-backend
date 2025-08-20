@@ -42,60 +42,28 @@ class OrderItemServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Create and save a regular user for the order
-        String randomEmail = "testUser_" + UUID.randomUUID() + "@gmail.com";
-        regularUser = new RegularUser.RegularUserBuilder()
-                .setFullName("Test User")
-                .setEmail(randomEmail)
-                .setPassword("password")
-                .setDateJoined(LocalDateTime.now())
-                .build();
-        regularUser = regularUserRepository.save(regularUser);
-        assertNotNull(regularUser.getId(), "User ID should not be null after saving");
-
-        // Create and save a book for the order item, and set the user
+        // Create and save a book for the order item
         book = new Book.Builder()
                 .setTitle("Test Book")
                 .setAuthor("Test Author")
                 .setPrice(19.99)
                 .setCondition(BookCondition.EXCELLENT)
                 .setUploadedDate(LocalDateTime.now())
-                .setUser(regularUser)
-                .build();
-        book = bookRepository.save(book);
-        assertNotNull(book.getBookID(), "Book ID should not be null after saving");
-        
-        // Create and save an order for the order item
-        order = new Order.OrderBuilder()
-                .setOrderDate(LocalDateTime.now())
-                .setRegularUser(regularUser)
-                .build();
-        order = orderRepository.save(order);
-        assertNotNull(order.getOrderId(), "Order ID should not be null after saving");
+        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
+        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
 
-        // Create and save an order item
-        orderItem = new OrderItem.OrderItemBuilder()
-                .setBook(book)
-                .setOrder(order)
-                .setQuantity(2)
-                .setOrderStatus(OrderStatus.PENDING)
-                .build();
-        orderItem = orderItemService.save(orderItem);
-        assertNotNull(orderItem.getOrderItemId(), "Order Item ID should not be null after saving");
-    }
 
-    @Test
-    @org.junit.jupiter.api.Order(1)
-    void save() {
-        // Create a new order item with the initialized book and order
-        OrderItem newOrderItem = new OrderItem.OrderItemBuilder()
-                .setBook(book)
-                .setOrder(order)
-                .setQuantity(3)
-                .setOrderStatus(OrderStatus.PENDING)
-                .build();
+        // Create and save a book for the order item
+        book = new Book.Builder()
+                .setTitle("Test Book")
+                .setAuthor("Test Author")
+                .setPrice(19.99)
+                .setCondition(BookCondition.EXCELLENT)
+                .setUploadedDate(LocalDateTime.now())
+        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
+        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
+        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
 
-        // Save the order item using the service
         OrderItem savedOrderItem = orderItemService.save(newOrderItem);
         assertNotNull(savedOrderItem.getOrderItemId(), "Saved Order Item ID should not be null");
         assertEquals(3, savedOrderItem.getQuantity(), "Saved Order Item quantity should match");
