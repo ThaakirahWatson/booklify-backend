@@ -21,6 +21,7 @@ class OrderItemFactoryTest {
     private Order order;
     private Book book;
     private byte[] image;
+    private RegularUser regularUser;
 
     @BeforeEach
     void setUp() {  // Initialize the test data
@@ -28,7 +29,7 @@ class OrderItemFactoryTest {
 
         image = new byte[]{1, 2, 3};
         // Create a valid RegularUser
-        RegularUser regularUser = new RegularUserFactory().createRegularUser(
+        regularUser = new RegularUserFactory().createRegularUser(
                 "Test User",
                 "test@example.com",
                 "password123!",
@@ -47,7 +48,8 @@ class OrderItemFactoryTest {
                 BookCondition.ACCEPTABLE,
                 19.99,
                 "Minor marks in pages but readable",
-                image
+                image,
+                regularUser
         );
 
         quantity = 2;
