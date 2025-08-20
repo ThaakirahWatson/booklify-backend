@@ -11,16 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BookFactoryTest {
 
     private Book book1;
-//    private RegularUser seller;
+    private RegularUser user;
     private byte[] image;
 
     @BeforeEach
     void setUp() {
-//        seller = new RegularUser.RegularUserBuilder()
-//                .setFullName("Pelisa Pali")
-//                .setEmail("pelisa@example.com")
-//                .setPassword("securePassword123")
-//                .build();
+        user = new RegularUser.RegularUserBuilder()
+                .setFullName("Pelisa Pali")
+                .setEmail("pelisa@example.com")
+                .setPassword("securePassword123")
+                .build();
 
         image = new byte[]{1, 2, 3}; // Simulating an image byte array
     }
@@ -35,14 +35,14 @@ public class BookFactoryTest {
                 BookCondition.ACCEPTABLE,
                 19.99,
                 "Minor marks in pages but readable",
-//                seller,
-                image
+                image,
+                user
         );
 
         assertNotNull(book1);
         assertEquals("Atomic Habits", book1.getTitle());
         assertEquals(BookCondition.ACCEPTABLE, book1.getCondition());
-//        assertEquals("Pelisa Pali", book1.getSeller().getFullName());
+        assertEquals("Pelisa Pali", book1.getUser().getFullName());
         System.out.println(book1);
     }
 
@@ -57,8 +57,8 @@ public class BookFactoryTest {
                         BookCondition.EXCELLENT,
                         29.99,
                         "A must-read financial book.",
-//                        seller,
-                        image
+                        image,
+                        user
                 )
         );
 
@@ -75,8 +75,8 @@ public class BookFactoryTest {
                 BookCondition.ACCEPTABLE,
                 45.00,
                 "Gently used, no markings",
-//                seller,
-                image
+                image,
+                user
         );
         System.out.println(book2);
     }
