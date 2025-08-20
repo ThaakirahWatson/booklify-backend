@@ -8,9 +8,8 @@ public class Address{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(nullable = true)
-    protected String unitNumber;
+    protected Long unitNumber; // Changed from String to Long for auto-increment compatibility
 
     @Column(nullable = true)
     protected String street ;
@@ -45,7 +44,7 @@ public class Address{
 
     }
 
-    public String getUnitNumber() {
+    public Long getUnitNumber() {
         return unitNumber;
     }
 
@@ -86,7 +85,7 @@ public class Address{
                 '}';
     }
     public static class Builder {
-        protected String unitNumber ;
+        protected Long unitNumber ; // Changed from String to Long
         protected String street ;
         protected String suburb;
         protected String province;
@@ -94,7 +93,7 @@ public class Address{
         protected String country ;
         protected String postalCode;
 
-        public Builder setUnitNumber(String unitNumber) {
+        public Builder setUnitNumber(Long unitNumber) { // Changed parameter type
             this.unitNumber = unitNumber;
             return this;
         }
