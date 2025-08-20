@@ -28,7 +28,6 @@ public class AddressFactory {
             return null;
         }
         return new Address.Builder()
-                .setUnitNumber(unitNumber)
                 .setStreet(street)
                 .setSuburb(suburb)
                 .setCity(city)
