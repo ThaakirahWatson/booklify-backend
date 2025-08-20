@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,6 +26,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults()) // No .and() needed
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/regular-user/login").permitAll()
@@ -33,10 +35,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/admins/create").permitAll()
                         .requestMatchers("/api/admins/login").permitAll()
                         .requestMatchers("/api/admins/**").permitAll()
+                        .requestMatchers("/api/admins/users/**").permitAll()
                         .requestMatchers("/api/orderItems/**").permitAll()
                         .requestMatchers("/api/orders/**").permitAll()
-                        // Only admins can
-                        // Add any other public endpoints
+                        .requestMatchers("/api/book/**").permitAll()
+                        .requestMatchers("api/book/search/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

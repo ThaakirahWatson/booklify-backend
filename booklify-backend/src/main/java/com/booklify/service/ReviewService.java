@@ -48,10 +48,10 @@ public class ReviewService {
     }
 
     public List<Review> getReviewsByBook(Long bookId) {
-        return reviewRepository.findByBookBook(bookId);
+        return reviewRepository.findByBookBookID(bookId);
     }
 
     public List<Review> getReviewsByUser(Long userId) {
-        return reviewRepository.findByUserUser(userId);
+        return reviewRepository.findByUserId(userId);
     }
 }
