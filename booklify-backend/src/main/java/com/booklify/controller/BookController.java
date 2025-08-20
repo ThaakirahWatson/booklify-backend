@@ -45,9 +45,7 @@ public class BookController {
         if (imageFile != null && !imageFile.isEmpty()) {
             builder.setImage(imageFile.getBytes());
         }
-        Book created = service.save(builder.build());
-        return ResponseEntity.ok(BookDto.fromEntity(created));
-    }
+
 
     @GetMapping("/read/{id}")
     public ResponseEntity<BookDto> read(@PathVariable Long id) {
@@ -77,9 +75,6 @@ public class BookController {
         if (imageFile != null && !imageFile.isEmpty()) {
             builder.setImage(imageFile.getBytes());
         }
-        Book updated = service.update(builder.build());
-        return ResponseEntity.ok(BookDto.fromEntity(updated));
-    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
