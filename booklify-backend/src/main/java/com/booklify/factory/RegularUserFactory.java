@@ -21,6 +21,7 @@ public class RegularUserFactory {
             return null;
         }
 
+        // Accept password as already encoded (do not encode here)
         return new RegularUser.RegularUserBuilder()
                 .setFullName(fullName)
                 .setEmail(email)
