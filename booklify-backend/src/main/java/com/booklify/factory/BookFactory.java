@@ -1,6 +1,7 @@
 package com.booklify.factory;
 
 import com.booklify.domain.Book;
+import com.booklify.domain.RegularUser;
 import com.booklify.domain.enums.BookCondition;
 import com.booklify.util.Helper;
 
