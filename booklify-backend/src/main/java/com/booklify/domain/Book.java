@@ -1,6 +1,7 @@
 package com.booklify.domain;
 
 import com.booklify.domain.enums.BookCondition;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +41,9 @@ public class Book {
     @Column(name = "image_data", columnDefinition = "LONGBLOB")
     private byte[] image;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "seller_id", nullable = false)
-//    private RegularUser seller;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private RegularUser user;
 
     protected Book(){
 
@@ -57,7 +59,7 @@ public class Book {
         this.price = builder.price;
         this.description = builder.description;
         this.uploadedDate = builder.uploadedDate;
-//        this.seller = builder.seller;
+        this.user = builder.user;
         this.image = builder.image;
 
 
@@ -109,9 +111,9 @@ public class Book {
     }
 
 
-//    public RegularUser getSeller() {
-//        return seller;
-//    }
+    public RegularUser getUser() {
+        return user;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -138,6 +140,8 @@ public class Book {
                 ", description='" + description + '\'' +
                 ", uploadedDate=" + uploadedDate +
                 ", image=" + Arrays.toString(image) +
+                // Only print userId, avoid calling user.getEmail() to prevent LazyInitializationException
+                ", userId=" + (user != null ? user.getId() : null) +
                 '}';
     }
 
@@ -151,8 +155,8 @@ public class Book {
         private Double price;
         private String description;
         private LocalDateTime uploadedDate;
-//        private RegularUser seller;
-                private byte[] image;
+        private RegularUser user;
+        private byte[] image;
 
 
         public Builder setImage(byte[] image) {
@@ -206,11 +210,11 @@ public class Book {
             return this;
         }
 
-//
-//        public Builder setSeller(RegularUser seller) {
-//            this.seller = seller;
-//            return this;
-//        }
+
+        public Builder setUser(RegularUser user) {
+            this.user = user;
+            return this;
+        }
 
 
         public Builder copy(Book book){
@@ -223,7 +227,7 @@ public class Book {
             this.price = book.price;
             this.description = book.description;
             this.uploadedDate = book.uploadedDate;
-//            this.seller = book.seller;
+            this.user = book.user;
             this.image = book.image;
             return this;
         }

@@ -9,9 +9,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.List;
+import com.booklify.dto.BookDto;
+import com.booklify.repository.RegularUserRepository;
+import java.util.stream.Collectors;
+
 @CrossOrigin(origins = "http://127.0.0.1:3000")
 @RestController
 @RequestMapping("/api/book")
@@ -20,30 +23,62 @@ public class BookController {
     @Autowired
     private BookService service;
 
+    @Autowired
+    private RegularUserRepository regularUserRepository;
+
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Book> create(@RequestPart("bookRequest") Book book,
+    public ResponseEntity<BookDto> create(@RequestPart("bookRequest") BookDto bookDto,
                                        @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
-        if (imageFile != null && !imageFile.isEmpty()) {
-            book.setImage(imageFile.getBytes());
+        Book.Builder builder = new Book.Builder()
+                .setBookID(bookDto.getBookID())
+                .setIsbn(bookDto.getIsbn())
+                .setTitle(bookDto.getTitle())
+                .setAuthor(bookDto.getAuthor())
+                .setPublisher(bookDto.getPublisher())
+                .setCondition(bookDto.getCondition())
+                .setPrice(bookDto.getPrice())
+                .setDescription(bookDto.getDescription())
+                .setUploadedDate(bookDto.getUploadedDate());
+        if (bookDto.getUploaderId() != null) {
+            regularUserRepository.findById(bookDto.getUploaderId()).ifPresent(builder::setUser);
         }
-        Book created = service.save(book);
-        return ResponseEntity.ok(created);
+        if (imageFile != null && !imageFile.isEmpty()) {
+            builder.setImage(imageFile.getBytes());
+        }
+        Book created = service.save(builder.build());
+        return ResponseEntity.ok(BookDto.fromEntity(created));
     }
 
     @GetMapping("/read/{id}")
-    public ResponseEntity<Book> read(@PathVariable Long id) {
+    public ResponseEntity<BookDto> read(@PathVariable Long id) {
         Book book = service.findById(id);
-        return ResponseEntity.ok(book);
+        if (book == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(BookDto.fromEntity(book));
     }
 
     @PostMapping(value = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Book> update(@RequestPart("bookRequest") Book book,
+    public ResponseEntity<BookDto> update(@RequestPart("bookRequest") BookDto bookDto,
                                        @RequestPart(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
-        if (imageFile != null && !imageFile.isEmpty()) {
-            book.setImage(imageFile.getBytes());
+        Book.Builder builder = new Book.Builder()
+                .setBookID(bookDto.getBookID())
+                .setIsbn(bookDto.getIsbn())
+                .setTitle(bookDto.getTitle())
+                .setAuthor(bookDto.getAuthor())
+                .setPublisher(bookDto.getPublisher())
+                .setCondition(bookDto.getCondition())
+                .setPrice(bookDto.getPrice())
+                .setDescription(bookDto.getDescription())
+                .setUploadedDate(bookDto.getUploadedDate());
+        if (bookDto.getUploaderId() != null) {
+            regularUserRepository.findById(bookDto.getUploaderId()).ifPresent(builder::setUser);
         }
-        Book updated = service.update(book);
-        return ResponseEntity.ok(updated);
+        if (imageFile != null && !imageFile.isEmpty()) {
+            builder.setImage(imageFile.getBytes());
+        }
+        Book updated = service.update(builder.build());
+        return ResponseEntity.ok(BookDto.fromEntity(updated));
     }
 
     @DeleteMapping("/delete/{id}")
@@ -53,9 +88,10 @@ public class BookController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<Book>> getAll() {
+    public ResponseEntity<List<BookDto>> getAll() {
         List<Book> books = service.getAll();
-        return ResponseEntity.ok(books);
+        List<BookDto> dtos = books.stream().map(BookDto::fromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/image/{id}")
@@ -69,6 +105,33 @@ public class BookController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/search/title")
+    public ResponseEntity<List<BookDto>> searchBooks(@RequestParam String query) {
+        List<Book> books = service.findByTitleContainingIgnoreCase(query);
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<BookDto> dtos = books.stream().map(BookDto::fromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
 
+    @GetMapping("/search/author")
+    public ResponseEntity<List<BookDto>> searchBooksByAuthor(@RequestParam String author) {
+        List<Book> books = service.findByAuthor(author);
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<BookDto> dtos = books.stream().map(BookDto::fromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/search/isbn")
+    public ResponseEntity<List<BookDto>> searchBookByIsbn(@RequestParam String isbn) {
+        List<Book> books = service.findByIsbn(isbn);
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        List<BookDto> dtos = books.stream().map(BookDto::fromEntity).collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
 }
-
