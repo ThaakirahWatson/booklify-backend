@@ -46,4 +46,19 @@ public class BookService implements IBookService {
     public void deleteAll() {
         bookRepo.deleteAll();
     }
+
+    @Override
+    public List<Book> findByIsbn(String isbn) {
+        return bookRepo.findByIsbn(isbn);
+    }
+
+    @Override
+    public List<Book> findByTitleContainingIgnoreCase(String title) {
+        return bookRepo.findByTitleContainingIgnoreCase(title);
+    }
+
+    @Override
+    public List<Book> findByAuthor(String author) {
+        return bookRepo.findByAuthor(author);
+    }
 }
