@@ -37,7 +37,7 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public List<Transaction> findByPayment(Long paymentId) {
-        return transactionRepository.findByPayment_Id(paymentId);
+        return transactionRepository.findByPayment_PaymentId(paymentId);
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     List<Transaction> findByTransactionStatus(TransactionStatus transactionStatus);
     List<Transaction> findByOrder_OrderId(Long orderId);
-    List<Transaction> findByPayment_Id(Long id);
+    List<Transaction> findByPayment_PaymentId(Long paymentId);
     List<Transaction> findByRegularUser_Id(Long id);
 
 }
