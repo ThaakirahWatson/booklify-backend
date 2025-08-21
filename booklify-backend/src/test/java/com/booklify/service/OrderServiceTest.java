@@ -124,37 +124,3 @@ class OrderServiceTest {
     @Test
     @org.junit.jupiter.api.Order(5)
     void findByRegularUserId() {
-        // Ensure the regular user is saved before finding orders by user ID
-        assertNotNull(regularUser.getId(), "Regular User ID should not be null before finding orders");
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        // Ensure the order is saved before finding by order date
-        assertNotNull(order, "Order should not be null before finding by order date");
-        var orders = orderService.findByOrderDate(order.getOrderDate());
-        var orders = orderService.findByOrderDate(order.getOrderDate());
-        var orders = orderService.findByOrderDate(order.getOrderDate());
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        // Ensure the order is saved before deleting it
-        assertTrue(orders.stream().anyMatch(o -> o.getOrderId().equals(order.getOrderId())),
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
-        // Ensure the order is saved before deleting it
-        assertNotNull(order, "Order should not be null before deletion");
