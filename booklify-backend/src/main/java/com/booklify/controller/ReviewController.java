@@ -20,49 +20,69 @@ public class ReviewController {
 
     @PostMapping("/create")
     public ResponseEntity<Review> create(@RequestBody Review review) {
-        try {
-            Review created = reviewService.create(review);
-            return ResponseEntity.ok(created);
-        } catch (IllegalArgumentException e) {
+        if (review == null) {
             return ResponseEntity.badRequest().build();
         }
+        Review createdReview = reviewService.save(review);
+        return ResponseEntity.status(201).body(createdReview);
     }
 
     @GetMapping("/read/{id}")
     public ResponseEntity<Review> read(@PathVariable Long id) {
-        return reviewService.read(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PutMapping("/update")
-    public ResponseEntity<Review> update(@RequestBody Review review) {
-        Review updated = reviewService.update(review);
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
+        Review review = reviewService.findById(id);
+        if (review != null) {
+            return ResponseEntity.ok(review);
         }
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/update/{reviewId}")
+    public ResponseEntity<Review> update(@RequestBody Review review) {
+        if (review == null || review.getReviewId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Review updatedReview = reviewService.update(review);
+        if (updatedReview != null) {
+            return ResponseEntity.ok(updatedReview);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        boolean deleted = reviewService.delete(id);
-        return deleted ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+        boolean deleted = reviewService.deleteById(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Review>> getAll() {
-        return ResponseEntity.ok(reviewService.getAll());
+        List<Review> reviews = reviewService.getAll();
+        if (reviews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(reviews);
     }
 
     @GetMapping("/book/{bookId}")
     public ResponseEntity<List<Review>> getReviewsByBook(@PathVariable Long bookId) {
-        return ResponseEntity.ok(reviewService.getReviewsByBook(bookId));
+        List<Review> reviews = reviewService.getReviewsByBook(bookId);
+        if (reviews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(reviews);
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Review>> getReviewsByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(reviewService.getReviewsByUser(userId));
+        List<Review> reviews = reviewService.getReviewsByRegularUser(userId);
+        if (reviews.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(reviews);
     }
 }

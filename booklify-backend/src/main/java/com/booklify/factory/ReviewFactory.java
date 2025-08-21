@@ -2,6 +2,7 @@
 package com.booklify.factory;
 
 import com.booklify.domain.Book;
+import com.booklify.domain.RegularUser;
 import com.booklify.domain.Review;
 import com.booklify.domain.User;
 
@@ -20,7 +21,7 @@ public class ReviewFactory {
         return reviewFactory;
     }
 
-    public static Review createReview(int rating, String comment, LocalDate date, User user, Book book) {
+    public static Review createReview(int rating, String comment, LocalDate date, RegularUser user, Book book) {
         return new Review.Builder()
                 .setReviewRating(rating)
                 .setReviewComment(comment)

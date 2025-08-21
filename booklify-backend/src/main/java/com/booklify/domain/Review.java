@@ -18,7 +18,7 @@ public class Review {
     // 🔗 Relationship: Many reviews can be written by one user
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private RegularUser user;
 
     // 🔗 Relationship: Many reviews belong to one book
     @ManyToOne
@@ -67,7 +67,7 @@ public class Review {
         private int reviewRating;
         private String reviewComment;
         private LocalDate reviewDate;
-        private User user;
+        private RegularUser user;
         private Book book;
 
         public Builder setReviewId(Long reviewId) {
@@ -90,7 +90,7 @@ public class Review {
             return this;
         }
 
-        public Builder setUser(User user) {
+        public Builder setUser(RegularUser user) {
             this.user = user;
             return this;
         }
