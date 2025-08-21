@@ -341,7 +341,7 @@ class BookControllerTest {
         HttpHeaders authHeaders = new HttpHeaders();
         authHeaders.setBearerAuth(jwt);
         HttpEntity<Void> entity = new HttpEntity<>(authHeaders);
-        ResponseEntity<Book[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, Book[].class);
+
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertTrue(response.getBody().length > 0);

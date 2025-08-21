@@ -42,16 +42,6 @@ class OrderItemServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Create and save a book for the order item
-        book = new Book.Builder()
-                .setTitle("Test Book")
-                .setAuthor("Test Author")
-                .setPrice(19.99)
-                .setCondition(BookCondition.EXCELLENT)
-                .setUploadedDate(LocalDateTime.now())
-        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
-        assertNotNull(regularUser.getId(), "Regular User ID should not be null after saving");
-
 
         // Create and save a book for the order item
         book = new Book.Builder()

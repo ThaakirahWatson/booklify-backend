@@ -64,8 +64,6 @@ public class ReviewService implements IReviewService{
         return reviewRepository.findByUserId(id);
     }
 
-    @Override
-    public List<Review> getReviewsByBook(Long bookID) {
-        return reviewRepository.findByBook_BookID(bookID);
+
     }
 }
