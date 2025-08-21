@@ -6,10 +6,9 @@ import com.booklify.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class ReviewService {
+public class ReviewService implements IReviewService{
 
     private final ReviewRepository reviewRepository;
 
@@ -17,41 +16,53 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public Review create(Review review) {
-        if (review.getUser() == null || review.getBook() == null) {
-            throw new IllegalArgumentException("Review must be linked to both a User and a Book.");
-        }
-        return reviewRepository.save(review);
+
+    @Override
+    public Review save(Review entity) {
+        return reviewRepository.save(entity);
     }
 
-    public Optional<Review> read(Long id) {
-        return reviewRepository.findById(id);
+    @Override
+    public Review findById(Long aLong) {
+        return reviewRepository.findById(aLong)
+                .orElseThrow(() -> new RuntimeException("Review not found with id: " + aLong));
     }
 
-    public Review update(Review review) {
-        if (review.getReviewId() == null || !reviewRepository.existsById(review.getReviewId())) {
-            return null; // or throw an exception
-        }
-        return reviewRepository.save(review);
+    @Override
+    public Review update(Review entity) {
+        Review existing = findById(entity.getReviewId());
+
+        Review updatedReview = new Review.Builder()
+                .copy(existing)
+                .setReviewRating(entity.getReviewRating())
+                .setReviewComment(entity.getReviewComment())
+                .setReviewDate(entity.getReviewDate())
+                .setUser((com.booklify.domain.RegularUser) entity.getUser())
+                .setBook(entity.getBook())
+                .build();
+
+        return reviewRepository.save(updatedReview);
     }
 
-    public boolean delete(Long id) {
-        if (reviewRepository.existsById(id)) {
-            reviewRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    @Override
+    public boolean deleteById(Long aLong) {
+        return reviewRepository.findById(aLong)
+                .map(review -> {
+                    reviewRepository.delete(review);
+                    return true;
+                })
+                .orElse(false);
     }
 
+    @Override
     public List<Review> getAll() {
         return reviewRepository.findAll();
     }
 
-    public List<Review> getReviewsByBook(Long bookId) {
-        return reviewRepository.findByBookBookID(bookId);
+    @Override
+    public List<Review> getReviewsByRegularUser(Long id) {
+        return reviewRepository.findByUserId(id);
     }
-
-    public List<Review> getReviewsByUser(Long userId) {
 
     }
 }
